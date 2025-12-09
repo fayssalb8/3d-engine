@@ -11,9 +11,7 @@ services:
       - FLASK_DEBUG=False
       - PRUSA_SLICER_PATH=/usr/local/bin/prusa-slicer
       - API_KEY=${API_KEY:-}
-    volumes:
-      # Mount logs directory for persistence
-      - ./logs:/app/logs
+    # No volume mounts needed - logs go to stdout via gunicorn
     restart: unless-stopped
     networks:
       - coolify

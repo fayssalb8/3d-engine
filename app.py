@@ -17,18 +17,22 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = config.get('file_settings', 'max_file_size_mb', default=100) * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = tempfile.gettempdir()
 
-# Configure logging
+# Configure logging - with fallback to stdout if file logging fails
 if not app.debug:
-    if not os.path.exists('logs'):
-        os.mkdir('logs')
-    file_handler = RotatingFileHandler('logs/quote_engine.log', maxBytes=10240000, backupCount=10)
-    file_handler.setFormatter(logging.Formatter(
-        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
-    ))
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
+    try:
+        if not os.path.exists('logs'):
+            os.mkdir('logs')
+        file_handler = RotatingFileHandler('logs/quote_engine.log', maxBytes=10240000, backupCount=10)
+        file_handler.setFormatter(logging.Formatter(
+            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+        ))
+        file_handler.setLevel(logging.INFO)
+        app.logger.addHandler(file_handler)
+    except (PermissionError, OSError) as e:
+        # File logging not available, use stdout only (gunicorn captures this)
+        print(f"Warning: Could not setup file logging: {e}. Using stdout only.")
     app.logger.setLevel(logging.INFO)
-    app.logger.info('Machine Shop Suite startup')
+    app.logger.info('Quote Engine startup')
 
 
 # ============================================================================
