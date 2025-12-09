@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  quote-engine:
+    build: .
+    container_name: quote-engine
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_DEBUG=False
+      - PRUSA_SLICER_PATH=/usr/local/bin/prusa-slicer
+      - API_KEY=${API_KEY:-}
+    volumes:
+      # Mount config file to persist settings
+      - ./config.json:/app/config.json
+      # Mount logs directory
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - coolify
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5000/api/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "coolify.managed=true"
+      - "coolify.type=application"
+
+networks:
+  coolify:
+    external: true
