@@ -10,10 +10,22 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # Install system dependencies and PrusaSlicer
+# libgl1-mesa-glx and friends are needed for PrusaSlicer even in headless mode
 RUN apt-get update && apt-get install -y \
     wget \
     curl \
     ca-certificates \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libgtk-3-0 \
+    libgomp1 \
+    libglu1-mesa \
+    libegl1-mesa \
+    libxrender1 \
+    libxext6 \
+    libx11-6 \
+    libxcb1 \
+    fontconfig \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install PrusaSlicer (AppImage)
