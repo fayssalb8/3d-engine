@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 # Download and install PrusaSlicer (AppImage)
 # Using version 2.8.1 - last stable version with AppImage (2.9.x moved to Flatpak)
 # Note: 2.8.1 has SLA support via --export-sla command
-RUN wget https://github.com/prusa3d/PrusaSlicer/releases/download/version_2.8.1/PrusaSlicer-2.8.1+linux-x64-GTK3-202409181416.AppImage \
+RUN wget "https://github.com/prusa3d/PrusaSlicer/releases/download/version_2.8.1/PrusaSlicer-2.8.1%2Blinux-x64-newer-distros-GTK3-202409181416.AppImage" \
     -O /usr/local/bin/PrusaSlicer.AppImage \
     && chmod +x /usr/local/bin/PrusaSlicer.AppImage
 
