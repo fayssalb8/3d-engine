@@ -10,13 +10,14 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # Install system dependencies and PrusaSlicer
-# libgl1 and friends are needed for PrusaSlicer even in headless mode
+# PrusaSlicer AppImage needs GTK3 and OpenGL libraries even for CLI mode
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
     ca-certificates \
     libgl1 \
     libglib2.0-0 \
+    libgtk-3-0 \
     libgomp1 \
     libxrender1 \
     libxext6 \
@@ -25,6 +26,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfontconfig1 \
     libsm6 \
     libice6 \
+    libcairo2 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libgdk-pixbuf-2.0-0 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libxi6 \
+    libxcursor1 \
+    libxtst6 \
+    libwayland-client0 \
+    libwayland-egl1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install PrusaSlicer (AppImage)
