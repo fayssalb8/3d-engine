@@ -12,9 +12,7 @@ services:
       - PRUSA_SLICER_PATH=/usr/local/bin/prusa-slicer
       - API_KEY=${API_KEY:-}
     volumes:
-      # Mount config file to persist settings
-      - ./config.json:/app/config.json
-      # Mount logs directory
+      # Mount logs directory for persistence
       - ./logs:/app/logs
     restart: unless-stopped
     networks:

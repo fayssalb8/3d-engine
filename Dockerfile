@@ -43,10 +43,10 @@ COPY utils.py .
 COPY templates/ ./templates/
 COPY static/ ./static/
 
-# Create necessary directories
-RUN mkdir -p logs
+# Create necessary directories with proper permissions
+RUN mkdir -p logs uploads
 
-# Create non-root user for security
+# Create non-root user for security and set ownership
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
