@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # Install system dependencies and PrusaSlicer
-# PrusaSlicer AppImage needs GTK3 and OpenGL libraries even for CLI mode
+# PrusaSlicer AppImage needs GTK3, WebKit, and OpenGL libraries even for CLI mode
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
@@ -41,6 +41,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxtst6 \
     libwayland-client0 \
     libwayland-egl1 \
+    libwebkit2gtk-4.1-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install PrusaSlicer (AppImage)
